@@ -1,0 +1,5 @@
+body { position: relative; width: 100%; text-align: center; }
+img#cat-image { max-width: 100%; }
+img#cat-image:hover { cursor: pointer; }
+p { margin-left: auto; margin-right: auto; }
+p#number-of-clicks { font-size: xx-large; font-size: -webkit-xxx-large; }
