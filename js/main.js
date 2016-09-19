@@ -1,23 +1,49 @@
-var HTMLcat = '<p>%name%</p><p>Number of clicks:</p><p id="clicks-%name%" class="clicks">0</p></div><img class="cat-image" src="img/cat_%name%.jpg" alt="lovely kitten %name% is looking at you">'
+var HTMLCatNavigationLink = '<a class="mdl-navigation__link">🐱 %name%</a>';
+var HTMLCatBadge = '<span class="cat-clicker-card-image__clicks mdl-badge" data-badge="4">Inbox</span>';
 
+var Cat = function (name, imageURL) {
+  this.name = name;
+  this.imageURL = imageURL;
+  this.clicks = 0;
+};
 
-var cats = document.getElementById('cats');
-var cat;
+var cats = [
+  new Cat('300', 'https://placekitten.com/g/300/300'),
+  new Cat('301', 'https://placekitten.com/g/301/301'),
+  new Cat('302', 'https://placekitten.com/g/302/302'),
+  new Cat('303', 'https://placekitten.com/g/303/303'),
+  new Cat('304', 'https://placekitten.com/g/304/304')];
 
-cat = document.createElement('div');
-cat.innerHTML = HTMLcat.replace(/%name%/g, 'Alice');
-cats.appendChild(cat);
+var index = 0;
+var navigation = $('#navigation');
+for (cat of cats) {
+  navigation.append(HTMLCatNavigationLink.replace('%name%', cat.name));
+  navigation.children().last().click((function(copyCat) {
+    return function() {
+      updateCard(copyCat);
+    };
+  })(cat));
+  index++;
+}
 
-cat = document.createElement('div');
-cat.innerHTML = HTMLcat.replace(/%name%/g, 'Bob');
-cats.appendChild(cat);
+var card = $('.cat-clicker-card-image.mdl-card');
+var drawer = $('#drawer');
+var data = $('#data');
+function updateCard(cat) {
+  card.css('background', 'url(\'' + cat.imageURL + '\') center / cover');
+  card.off('click');
+  card.click((function(copyCat) {
+    return function() {
+      updateClicks(copyCat);
+    };
+  })(cat));
+  data.text(cat.name);
+  data.attr("data-badge", cat.clicks);
+  drawer.toggleClass('is-visible');
+  $('.mdl-layout__obfuscator').toggleClass('is-visible');
+}
 
-var catImages = document.getElementsByClassName('cat-image');
-for (catImage of catImages) {
-  catImage.addEventListener('click', function(){
-    var name = this.parentNode.firstChild.textContent;
-    var clicks = document.getElementById('clicks-%name%'.replace('%name%', name));
-    var value = parseInt(clicks.textContent);
-    clicks.textContent = value + 1;
-  }, false);
+function updateClicks(cat) {
+  cat.clicks++;
+  data.attr("data-badge", cat.clicks);
 }

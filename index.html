@@ -3,12 +3,34 @@
 <head>
 	<title>Cat Clicker</title>
 	<meta charset="utf-8">
-  <meta name=viewport content="width=device-width, initial-scale=1">
-  <link href="css/main.css" rel="stylesheet">
+	<meta name=viewport content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css">
+	<link href="css/main.css" rel="stylesheet">
+	<script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
 </head>
 <body>
-	<div id="cats">
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+	  <header class="mdl-layout__header">
+	    <div class="mdl-layout__header-row">
+	      <span class="mdl-layout-title">Cat Clicker</span>
+	    </div>
+	  </header>
+	  <div id="drawer" class="mdl-layout__drawer">
+	    <nav id="navigation" class="mdl-navigation"></nav>
+	  </div>
+	  <main class="mdl-layout__content">
+	    <div class="page-content">
+				<div class="cat-clicker-card-image mdl-card mdl-shadow--2dp">
+				  <div class="mdl-card__title mdl-card--expand"></div>
+				  <div class="mdl-card__actions">
+				    <span id="data" class="cat-clicker-card-image__name mdl-badge" data-badge="↖️">Pick a cat from menu</span>
+				  </div>
+				</div>
+			</div>
+	  </main>
 	</div>
-  <script src="js/main.js"></script>
+	<script src="js/main.js"></script>
 </body>
 </html>
