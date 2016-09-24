@@ -9,7 +9,6 @@
   width: 100%;
   max-width: 256px;
   height: 256px;
-  background: url('https://placekitten.com/g/256/256') center / cover;
 }
 .cat-clicker-card-image > .mdl-card__actions {
   height: 52px;
