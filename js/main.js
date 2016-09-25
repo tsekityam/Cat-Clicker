@@ -11,6 +11,7 @@ $(function(){
   };
 
   var cats= [];
+  var currentCat;
 
   // octopus
   var octopus = {
@@ -18,15 +19,19 @@ $(function(){
       var cat = new Cat(name, url);
       cats.push(cat);
     },
-    getCat:function(index) {
-      return cats[0];
+    setCurrentCat: function(cat) {
+      currentCat = cat;
+      this.showCurrentCat();
     },
-    clickCat: function(cat) {
-      cat.clicks++;
-      this.showCat(cat);
+    getCat: function(index) {
+      return cats[index];
     },
-    showCat: function(cat) {
-      main.render(cat);
+    clickCurrentCat: function() {
+      currentCat.clicks++;
+      this.showCurrentCat();
+    },
+    showCurrentCat: function() {
+      main.render(currentCat);
     },
     init: function() {
       this.addCat('300', 'https://placekitten.com/g/300/300');
@@ -59,7 +64,7 @@ $(function(){
         navigation.append(HTMLCatNavigationLink.replace('%name%', cat.name));
         navigation.children().last().click((function(copyCat) {
           return function() {
-            octopus.showCat(copyCat);
+            octopus.setCurrentCat(copyCat);
           };
         })(cat));
       }
@@ -68,17 +73,13 @@ $(function(){
 
   var main = {
     init: function() {
-      var firstCat = octopus.getCat(0);
-      octopus.showCat(firstCat);
+      octopus.setCurrentCat(octopus.getCat(0));
+      card.click(function() {
+          octopus.clickCurrentCat();
+      });
     },
     render: function(cat) {
       card.css('background', 'url(\'' + cat.imageURL + '\') center / cover');
-      card.off('click');
-      card.click((function(copyCat) {
-        return function() {
-          octopus.clickCat(copyCat);
-        };
-      })(cat));
       data.text(cat.name);
       data.attr("data-badge", cat.clicks);
       if (drawer.hasClass('is-visible')) {
