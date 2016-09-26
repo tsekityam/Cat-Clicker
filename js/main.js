@@ -26,6 +26,14 @@ $(function(){
     getCat: function(index) {
       return cats[index];
     },
+    getCurrentCat: function() {
+      return currentCat;
+    },
+    updateCurrentCat: function(name, imageURL, clicks) {
+      currentCat.name = name;
+      currentCat.imageURL = imageURL;
+      currentCat.clicks = clicks;
+    },
     clickCurrentCat: function() {
       currentCat.clicks++;
       this.showCurrentCat();
@@ -52,10 +60,9 @@ $(function(){
   }
 
   // view
+
+  // side bar
   var navigation = $('#navigation');
-  var card = $('.cat-clicker-card-image.mdl-card');
-  var drawer = $('#drawer');
-  var data = $('#data');
 
   var list = {
     render: function() {
@@ -71,6 +78,11 @@ $(function(){
     }
   }
 
+  // card view
+  var card = $('.cat-clicker-card-image.mdl-card');
+  var drawer = $('#drawer');
+  var data = $('#data');
+
   var main = {
     init: function() {
       octopus.setCurrentCat(octopus.getCat(0));
@@ -79,6 +91,8 @@ $(function(){
       });
     },
     render: function(cat) {
+      // TODO: if name is updated but not clicks, the position of badge may be incorrect
+      // i.e. the badge is on top of the middle of the name.
       card.css('background', 'url(\'' + cat.imageURL + '\') center / cover');
       data.text(cat.name);
       data.attr("data-badge", cat.clicks);
@@ -91,6 +105,33 @@ $(function(){
       }
     }
   }
+
+  // admin dialog
+  var dialog = document.querySelector('dialog');
+  var showDialogButton = document.querySelector('#show-dialog');
+  var nameInputField = document.querySelector('#name-input');
+  var urlInputField = document.querySelector('#url-input');
+  var clicksInputField = document.querySelector('#clicks-input');
+
+
+  if (! dialog.showModal) {
+    dialogPolyfill.registerDialog(dialog);
+  }
+  showDialogButton.addEventListener('click', function() {
+    var currentCat = octopus.getCurrentCat();
+    nameInputField.parentNode.MaterialTextfield.change(currentCat.name);
+    urlInputField.parentNode.MaterialTextfield.change(currentCat.imageURL);
+    clicksInputField.parentNode.MaterialTextfield.change(currentCat.clicks.toString());
+    dialog.showModal();
+  });
+  dialog.querySelector('.discard').addEventListener('click', function() {
+    dialog.close();
+  });
+  dialog.querySelector('.save').addEventListener('click', function() {
+    octopus.updateCurrentCat(nameInputField.value, urlInputField.value, clicksInputField.value);
+    octopus.showCurrentCat();
+    dialog.close();
+  });
 
   octopus.init();
 });

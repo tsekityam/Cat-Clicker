@@ -6,9 +6,11 @@
 	<meta name=viewport content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.4/dialog-polyfill.min.css" integrity="sha256-250Ma3qItsmSQOydFFcsUG+5+jaNv75xPAH1tdKE4Xs=" crossorigin="anonymous" />
 	<link href="css/main.css" rel="stylesheet">
 	<script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.4/dialog-polyfill.min.js" integrity="sha256-EcB5AWC4OWeELa87/5HI01u5GWmJcwQL7N+jGS54iw4=" crossorigin="anonymous"></script>
 </head>
 <body>
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -28,9 +30,31 @@
 				    <span id="data" class="cat-clicker-card-image__name mdl-badge"></span>
 				  </div>
 				</div>
+				<button id="show-dialog" type="button" class="mdl-button mdl-js-button mdl-button--raised">Admin</button>
 			</div>
 	  </main>
 	</div>
+  <dialog class="mdl-dialog">
+    <h4 class="mdl-dialog__title">Update Cat</h4>
+    <div class="mdl-dialog__content">
+			<div class="mdl-textfield mdl-js-textfield">
+		    <input class="mdl-textfield__input" type="text" id="name-input">
+		    <label class="mdl-textfield__label" for="name">Name</label>
+	    </div>
+			<div class="mdl-textfield mdl-js-textfield">
+		    <input class="mdl-textfield__input" type="url" id="url-input">
+		    <label class="mdl-textfield__label" for="url">image URL</label>
+	    </div>
+	  <div class="mdl-textfield mdl-js-textfield">
+	    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="clicks-input">
+	    <label class="mdl-textfield__label" for="clicks">Clicks</label>
+	    <span class="mdl-textfield__error">Input is not a number!</span>
+	  </div>
+    <div class="mdl-dialog__actions">
+      <button type="button" class="mdl-button save">Save</button>
+      <button type="button" class="mdl-button discard">Discard</button>
+    </div>
+  </dialog>
 	<script src="js/main.js"></script>
 </body>
 </html>
